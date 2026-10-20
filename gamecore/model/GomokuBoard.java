@@ -20,7 +20,7 @@ public class GomokuBoard
     
     // Indice 0 : la ligne 
     // Indice 1 : la colonne
-    public CellColor [][] cells;
+    public final CellColor [][] cells;
 
     /**
      * Création d'un plateau de Gomoku vide

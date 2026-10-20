@@ -10,7 +10,7 @@ public abstract class AbstractGameManager {
     protected AbstractPlayer player2;
     protected int roundCount;
     protected AbstractPlayer currentPlayer;
-    protected GomokuBoard board;
+    protected final GomokuBoard board;
 
     public AbstractGameManager(AbstractPlayer player1, AbstractPlayer player2)
     {

@@ -21,7 +21,7 @@ public enum WinnerState
     NONE,
 
     /**
-     * Egalité (plus de place sur le plateau)
+     * Égalité (plus de place sur le plateau)
      */
     TIE
 }
