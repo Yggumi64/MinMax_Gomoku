@@ -11,7 +11,7 @@ import fr.esisar.in450.gomoku.gamecore.model.Coords;
  */
 public class HumanPlayer extends AbstractPlayer
 {
-	private Scanner scanner;
+	private final Scanner scanner;
 
 	public HumanPlayer()
 	{
@@ -31,7 +31,7 @@ public class HumanPlayer extends AbstractPlayer
 				System.out.print("Ligne: ");
 				coords.row = scanner.nextInt()-1;
 
-				if (!isValid(coords.row))
+				if (isValid(coords.row))
 				{
 					System.out.println("Cette ligne n'existe pas.");
 					coords.row = -1; // Réinitialiser la ligne
@@ -50,7 +50,7 @@ public class HumanPlayer extends AbstractPlayer
 				System.out.print("Colonne: ");
 				coords.col = scanner.nextInt()-1;
 
-				if (!isValid(coords.col))
+				if (isValid(coords.col))
 				{
 					System.out.println("Cette colonne n'existe pas.");
 					coords.col = -1; // Réinitialiser la colonne
@@ -72,7 +72,7 @@ public class HumanPlayer extends AbstractPlayer
 
 	private boolean isValid(int rowOrCol)
 	{
-		return rowOrCol>=0 && rowOrCol <board.SIZE;
+		return !(rowOrCol>=0 && rowOrCol <board.SIZE);
 	}
 
 	

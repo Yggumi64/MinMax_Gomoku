@@ -5,10 +5,10 @@ package fr.esisar.in450.gomoku.gamecore.model;
  * */
 public class Coords
 {
-    // Numéro de ligne depuis le haut à partir de 0
+    // Numéro de ligne depuis le haut à partir de 0.
     public int row;
  
-    // Numéro de colonne depuis la gauche à partir de 0
+    // Numéro de colonne depuis la gauche à partir de 0.
     public int col;
 
     public Coords()

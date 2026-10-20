@@ -7,16 +7,16 @@ import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
 import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
 
 /**
- * Modelisation d'un plateau de Gomoku
- * 
- * Un plateau de Gomuku est composé de SIZE * SIZE cellules (cells)
- * 
- * Chaque cellule est soit vide (null) , soit d'une couleur (CellColor)  
+ * Modelisation d'un plateau de Gomoku -
+ * Un plateau de Gomuku est composé de SIZE * SIZE cellules (cells).
+ * Chaque cellule est soit vide (null) , soit d'une couleur (CellColor).
  */
 public class GomokuBoard 
 {
     // Taille du plateau
     public final int SIZE = 15;
+    public static final String B_LINE = "BBBBB";
+    public static final String W_LINE = "WWWWW";
     
     // Indice 0 : la ligne 
     // Indice 1 : la colonne
@@ -32,9 +32,8 @@ public class GomokuBoard
     }
     
     /**
-     * Permet d'ajouter une pierre sur le plateau 
-     * 
-     * Pour enlenver une pierre, mettre CellColor à null
+     * Permet d'ajouter une pierre sur le plateau
+     * Pour enlever une pierre, mettre CellColor à null
      */
 	public void setCellColor(int row, int col, CellColor cellColor)
 	{
@@ -138,7 +137,7 @@ public class GomokuBoard
 
 		
 		// Test du tie
-		if (hasAnEmptyCell()==false)
+		if (!hasAnEmptyCell())
 		{
 			return WinnerState.TIE;
 		}
@@ -170,18 +169,18 @@ public class GomokuBoard
 	
 	private List<String> getAllDiagDesc()
 	{
-		List<String> res = new ArrayList<String>(); 
+		List<String> res = new ArrayList<>();
 		
 		// Les diagonales ↘ partant de l'axe horizontal du haut 
 		for (int len = 5; len <= SIZE; len++)
 		{
-			res.add(getDiag(len, 0, SIZE-len, 1, 1));
+			res.add(getDiag(len, 0, SIZE-len, 1));
 		}
 		
 		// Les diagonales ↘ partant de l'axe vertical de gauche
 		for (int len = 5; len <= SIZE-1; len++)
 		{
-			res.add(getDiag(len, SIZE-len, 0 , 1, 1));
+			res.add(getDiag(len, SIZE-len, 0 , 1));
 		}
 
 		return res;
@@ -189,29 +188,29 @@ public class GomokuBoard
 	
 	private List<String> getAllDiagAsc()
 	{
-		List<String> res = new ArrayList<String>(); 
+		List<String> res = new ArrayList<>();
 		
 		// Les diagonales ↗ partant de l'axe horizontal du bas  
 		for (int len = 5; len <= SIZE; len++)
 		{
-			res.add(getDiag(len, SIZE-1, SIZE-len, -1, 1));
+			res.add(getDiag(len, SIZE-1, SIZE-len, -1));
 		}
 		
 		// Les diagonales ↗ partant de l'axe vertical de gauche 
 		for (int len = 5; len <= SIZE-1; len++)
 		{
-			res.add(getDiag(len, len-1, 0 , -1, 1));
+			res.add(getDiag(len, len-1, 0 , -1));
 		}
 
 		return res;
 	}
 
-	private String getDiag(int len,int startRow,int startCol,int dx,int dy)
+	private String getDiag(int len,int startRow,int startCol,int dx)
 	{
     	StringBuilder sb = new StringBuilder(); 
 		for (int i = 0; i < len; i++)
 		{
-			sb.append(getCellAsString(startRow+dx*i,startCol+dy*i));
+			sb.append(getCellAsString(startRow+dx*i,startCol+ i));
 		}
 		return sb.toString();
 	}	
@@ -241,12 +240,12 @@ public class GomokuBoard
 
 	private WinnerState hasWinner(String st)
 	{
-		if (st.indexOf("WWWWW")!=-1)
+		if (st.contains(W_LINE))
 		{
 			return WinnerState.WHITE;
 		}
 		
-		if (st.indexOf("BBBBB")!=-1)
+		if (st.contains(B_LINE))
 		{
 			return WinnerState.BLACK;
 		}
@@ -263,12 +262,12 @@ public class GomokuBoard
     	System.out.print("   ");
 		for (int i = 0; i < SIZE; i++)
 		{
-			System.out.print(String.format("%02d ", i+1)); // Afficher le numéro des colonnes
+			System.out.printf("%02d ", i+1); // Afficher le numéro des colonnes
 		}
 		System.out.println();
 		for (int i = 0; i < SIZE; i++)
 		{
-			System.out.print(String.format("%02d ", (i+1))); // Afficher le numéro de la ligne
+			System.out.printf("%02d ", (i+1)); // Afficher le numéro de la ligne
 			for (int j = 0; j < SIZE; j++)
 			{
 				displayCell(cells[i][j]);

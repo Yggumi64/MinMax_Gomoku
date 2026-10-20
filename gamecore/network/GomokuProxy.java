@@ -11,7 +11,7 @@ import fr.esisar.in450.gomoku.gamecore.model.Coords;
 
 public class GomokuProxy
 {
-	private String ipServer;
+	private final String ipServer;
 
 	private DataInputStream dis;
 	private DataOutputStream dos;
@@ -27,6 +27,7 @@ public class GomokuProxy
 	{
 		try
 		{
+            // noinspection resource
 			Socket s = new Socket(ipServer, 7200);
 	
 			dis = new DataInputStream(s.getInputStream());
@@ -108,11 +109,11 @@ public class GomokuProxy
 	{
 		try
 		{
-			// Serialisation de la requete  
+			// Serialisation de la requête
 			req.serialize(dos);
 			dos.flush();
 			
-			// Deserialisation de la reponse
+			// Deserialisation de la réponse
 			GomokuResponse res = GomokuResponse.deserialize(dis);
 			if (res.errorMessage!=null)
 			{
@@ -122,7 +123,7 @@ public class GomokuProxy
 		} 
 		catch (IOException e)
 		{
-			throw new RuntimeException("Erreur de comunication",e);
+			throw new RuntimeException("Erreur de communication",e);
 		} 
 	}
 }

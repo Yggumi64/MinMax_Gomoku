@@ -10,8 +10,9 @@ public class GomokuServer extends Thread
 	{
 		System.out.println("Lancement du serveur de jeu GOMOKU");
 		System.out.println("Attente de la première connexion ....");
-		
-		ServerSocket ss = new ServerSocket(7200);
+
+        // noinspection resource
+        ServerSocket ss = new ServerSocket(7200);
 		
 		ConcurrentServer cc = new ConcurrentServer();
 		

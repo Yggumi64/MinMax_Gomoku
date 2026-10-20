@@ -8,10 +8,10 @@ public class GomokuRequest
 {
 	public RequestResponseType type;
 	
-	// Nombre de parties que l'on souhaite réaliser 
+	// Nombre de parties que l'on souhaite réaliser.
 	public int nbGame;
 	
-	// Coordonnées du coup que l'on souhaite jouer 
+	// Coordonnées du coup que l'on souhaite jouer.
 	public int row;
 	
 	public int col;
@@ -24,13 +24,13 @@ public class GomokuRequest
      */
     public void serialize(DataOutputStream out) throws IOException
     {
-        // On écrit l'enum sous forme d'entier (son ordinal)
+        // On écrit l'Enum sous forme d'entier (son ordinal).
         out.writeInt(type.ordinal());
         out.writeInt(nbGame);
         out.writeInt(row);
         out.writeInt(col);
 
-        // Gestion du cas où teamName pourrait être null
+        // Gestion du cas où teamName pourrait être null.
         if (teamName != null)
         {
             out.writeBoolean(true);

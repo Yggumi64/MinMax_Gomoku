@@ -6,13 +6,13 @@ import java.io.IOException;
 
 public class GomokuResponse
 {
-	// Indique le nombre réel de partie à jouer
+	// Indique le nombre réel de parties à jouer
 	public int realNbGames;
 	
 	// Indique la couleur du joueur 
 	public boolean isWhite;
 	
-	// 0 : on continue , 1 : les blancs gagnent , 2 : les noirs gagnent , 3 : tie
+	// 0: on continue, 1: les blancs gagnent, 2: les noirs gagnent, 3: tie
 	public int winnerState;   
 	
 	// Coordonnées du coup que l'on souhaite jouer 

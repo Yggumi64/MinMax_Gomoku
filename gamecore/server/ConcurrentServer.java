@@ -10,9 +10,9 @@ public class ConcurrentServer
 
 	private GomokuBoard board;
 	
-	private Coords[] lastMoves = { null, null };
-	private int[] nbGames = { -1 , -1 };
-	private int[] winnerStates = { -1 , -1 };
+	private final Coords[] lastMoves = { null, null };
+	private final int[] nbGames = { -1 , -1 };
+	private final int[] winnerStates = { -1 , -1 };
 	
 
 	public void initializeBoard()
@@ -35,8 +35,8 @@ public class ConcurrentServer
 
 	public String play(int row, int col, boolean isWhite,int pcNumber, int currentGameNumber,String teamName)
 	{
-		// On verifie d'abord si le coup est valide
-		if (isValid(row)==false || isValid(col)==false)
+		// On vérifie d'abord si le coup est valide
+		if (isValid(row) || isValid(col))
 		{
 			return "Les coordonnées sont incorrectes : row = "+row +" col = "+col;
 		}
@@ -64,7 +64,7 @@ public class ConcurrentServer
 	
 	private boolean isValid(int rowOrCol)
 	{
-		return rowOrCol>=0 && rowOrCol <board.SIZE;
+		return rowOrCol < 0 || rowOrCol >= board.SIZE;
 	}
 
 
@@ -72,7 +72,7 @@ public class ConcurrentServer
 	{
 		if (winnerState==WinnerState.TIE)
 		{
-			return "Egalité";
+			return "Égalité";
 		}
 		return "Victoire du joueur "+(pcNumber+1)+"-"+teamName+" en tant que "+winnerState;
 	}
@@ -85,14 +85,12 @@ public class ConcurrentServer
 
 	private int getWinnerState(WinnerState winnerState)
 	{
-		switch (winnerState)
-		{
-		case NONE: return 0;
-		case WHITE: return 1;
-		case BLACK: return 2;
-		case TIE: return 3;
-		default: throw new RuntimeException();
-		}
+        return switch (winnerState) {
+            case NONE -> 0;
+            case WHITE -> 1;
+            case BLACK -> 2;
+            case TIE -> 3;
+        };
 	}
 
 
@@ -116,7 +114,7 @@ public class ConcurrentServer
 		{
 			Thread.sleep(10);
 		} 
-		catch (InterruptedException e)
+		catch (InterruptedException _)
 		{
 		}	
 	}

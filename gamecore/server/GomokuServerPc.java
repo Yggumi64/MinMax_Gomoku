@@ -15,11 +15,11 @@ public class GomokuServerPc extends Thread
 	private boolean localPlayerColorIsWhite;
 	private int currentGameNumber = 0;
 	
-	private int pcNumber;
+	private final int pcNumber;
 	private String teamName;
 	
-	private ConcurrentServer cc;
-	private Socket socket;
+	private final ConcurrentServer cc;
+	private final Socket socket;
 	private boolean stayConnected;
 	
 	 
@@ -35,15 +35,13 @@ public class GomokuServerPc extends Thread
 	 
 	 public GomokuResponse process(GomokuRequest req)
 	 {
-		switch (req.type)
-		{
-		case START_ALL_GAMES: 			return startAllGames(req);
-		case START_ONE_GAME : 			return startOneGame(req);
-		case PLAY : 					return play(req);
-		case GET_WINNER_STATE : 		return getWinnerState(req);
-		case WAITING_OPPOSING_PLAYER : 	return waitingOppositePlayer(req);
-		default: 						throw new RuntimeException();
-		}
+         return switch (req.type) {
+             case START_ALL_GAMES -> startAllGames(req);
+             case START_ONE_GAME -> startOneGame();
+             case PLAY -> play(req);
+             case GET_WINNER_STATE -> getWinnerState();
+             case WAITING_OPPOSING_PLAYER -> waitingOppositePlayer();
+         };
 	 }
 
 
@@ -60,12 +58,12 @@ public class GomokuServerPc extends Thread
 	}
 
 	
-	private GomokuResponse startOneGame(GomokuRequest req)
+	private GomokuResponse startOneGame()
 	{
 		localPlayerColorIsWhite = !localPlayerColorIsWhite;
 		currentGameNumber++;
 		
-		if (localPlayerColorIsWhite==true)
+		if (localPlayerColorIsWhite)
 		{
 			System.out.println("Démarrage du match "+currentGameNumber+". Les WHITE sont joués par l'équipe "+(pcNumber+1)+"-"+teamName);
 		}
@@ -80,14 +78,12 @@ public class GomokuServerPc extends Thread
 	private GomokuResponse play(GomokuRequest req)
 	{  
 		String errorMessage = cc.play(req.row, req.col, localPlayerColorIsWhite , pcNumber , currentGameNumber,teamName);
-		
-		GomokuResponse res = new GomokuResponse();
-		res.errorMessage = errorMessage;
-		return res;
+
+        return GomokuResponse.error(errorMessage);
 	}
 	
 	
-	private GomokuResponse getWinnerState(GomokuRequest req)
+	private GomokuResponse getWinnerState()
 	{
 		int winnerState = cc.getWinnerState(pcNumber);
 		
@@ -104,7 +100,7 @@ public class GomokuServerPc extends Thread
 	
 	
 	
-	private GomokuResponse waitingOppositePlayer(GomokuRequest req)
+	private GomokuResponse waitingOppositePlayer()
 	{
 		Coords c = cc.waitingOppositePlayer(pcNumber);
 
@@ -126,13 +122,13 @@ public class GomokuServerPc extends Thread
 			
 			while(stayConnected)  
 			{
-				// Deserialisation de la requete 
+				// Deserialisation de la requête
 				GomokuRequest req = GomokuRequest.deserialize(dis);
 				
 				// Calcul de la réponse
 				GomokuResponse res = process(req);
 				
-				// Serialisation de la reponse
+				// Serialisation de la réponse
 				res.serialize(dos);
 				dos.flush();
 				

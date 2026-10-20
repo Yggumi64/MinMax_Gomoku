@@ -14,8 +14,30 @@ public abstract class AbstractPlayer
 	protected CellColor playerColor;
 	
 	protected GomokuBoard board;
+
+    protected long totalPlayTime;
+    protected long longestPlayTime;
+    protected long shortestPlayTime;
+    protected long moveCount;
+
+    protected AbstractPlayer() {
+        this.totalPlayTime = 0;
+        this.longestPlayTime = 0;
+        this.shortestPlayTime = Long.MAX_VALUE;
+        this.moveCount = 0;
+    }
 	
-	
+	public void updateStats(long moveDuration)
+	{
+		totalPlayTime += moveDuration;
+		longestPlayTime = Math.max(longestPlayTime, moveDuration);
+		shortestPlayTime = Math.min(shortestPlayTime, moveDuration);
+		moveCount++;
+	}
+    public void printStats() {
+        System.out.println("Blanc: " + moveCount + " coups, " + (totalPlayTime/moveCount) + " ms/coup, " + longestPlayTime + " ms (max), " + shortestPlayTime + " ms (min)");
+    }
+
 	/**
 	 * Permet d'indiquer au joueur quelle sera sa couleur 
 	 */

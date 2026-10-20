@@ -1,6 +1,7 @@
 package fr.esisar.in450.gomoku.player;
 
 import fr.esisar.in450.gomoku.gamecore.AbstractPlayer;
+import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
 import fr.esisar.in450.gomoku.gamecore.model.Coords;
 
 
@@ -12,7 +13,7 @@ public class BasicAIPlayer extends AbstractPlayer
 	@Override
 	public Coords play()
 	{
-		// On recherche une cellule vide à côté d'une de nos pierres , en privilegiant le centre
+		// On recherche une cellule vide à côté d'une de nos pierres, en privilégiant le centre
 		for (int i = 0; i < board.SIZE; i++)
 		{
 			for (int j = 0; j < board.SIZE; j++)
@@ -27,7 +28,7 @@ public class BasicAIPlayer extends AbstractPlayer
 			}
 		}
 		
-		// Si on n'a pas trouvé : on retourne n'importe quelle cellule vide, en privilegiant le centre
+		// Si on n'a pas trouvé : on retourne n'importe quelle cellule vide, en privilégiant le centre
 		for (int i = 0; i < board.SIZE; i++)
 		{
 			for (int j = 0; j < board.SIZE; j++)
@@ -47,12 +48,12 @@ public class BasicAIPlayer extends AbstractPlayer
 	}
 
 	/**
-	 * Retourne true si la cellule i,j est vide et qu'une cellule adjacente contient 
+	 * Retourne true si la cellule < i, j > est vide et qu'une cellule adjacente contient
 	 * une pierre de la couleur de ce joueur  
 	 */
 	private boolean isMatching(int i, int j)
 	{
-		// On verifie si la case est vide 
+		// On vérifie si la case est vide
 		if (board.getCellColor(i, j)!=null)
 		{
 			return false;
@@ -70,14 +71,12 @@ public class BasicAIPlayer extends AbstractPlayer
 		if (isMyStone(i-1,j-1)) return true;
 		if (isMyStone(i-1,j+1)) return true;
 		if (isMyStone(i+1,j-1)) return true;
-		if (isMyStone(i+1,j+1)) return true;
-		
-		return false;
-	}
+        return isMyStone(i + 1, j + 1);
+    }
 
 	/**
-	 * Retourne true si i,j sont des coordonnées valides et si 
-	 * la cellule i,j contient une pierre de de la couleur de ce joueur  
+	 * Retourne true si < i, j > sont des coordonnées valides et si
+	 * la cellule < i, j > contient une pierre de la couleur de ce joueur
 	 * 
 	 */
 	private boolean isMyStone(int i, int j)

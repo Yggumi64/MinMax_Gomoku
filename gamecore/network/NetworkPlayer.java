@@ -9,7 +9,7 @@ import fr.esisar.in450.gomoku.gamecore.model.Coords;
  */
 public class NetworkPlayer extends AbstractPlayer
 {
-	private GomokuProxy proxy;
+	private final GomokuProxy proxy;
 
 	public NetworkPlayer(GomokuProxy proxy)
 	{
