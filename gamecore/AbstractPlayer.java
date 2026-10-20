@@ -65,4 +65,26 @@ public abstract class AbstractPlayer
      * Permet à un joueur de jouer un coup
      */
     public abstract Coords play();
+
+    /**
+     * Retourne true si < i, j > sont des coordonnées valides et si
+     * la cellule < i, j > contient une pierre de la couleur de ce joueur
+     *
+     */
+    protected boolean isMyStone(int i, int j)
+    {
+        if (isValid(i) && isValid(j))
+        {
+            return board.getCellColor(i, j)==playerColor;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    protected boolean isValid(int rowOrCol)
+    {
+        return rowOrCol>=0 && rowOrCol <board.SIZE;
+    }
 }

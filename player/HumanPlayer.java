@@ -70,10 +70,5 @@ public class HumanPlayer extends AbstractPlayer
 		return coords;
 	}
 
-	private boolean isValid(int rowOrCol)
-	{
-		return !(rowOrCol>=0 && rowOrCol <board.SIZE);
-	}
-
 	
 }

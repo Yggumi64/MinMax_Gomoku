@@ -73,27 +73,5 @@ public class BasicAIPlayer extends AbstractPlayer
         return isMyStone(i + 1, j + 1);
     }
 
-	/**
-	 * Retourne true si < i, j > sont des coordonnées valides et si
-	 * la cellule < i, j > contient une pierre de la couleur de ce joueur
-	 * 
-	 */
-	private boolean isMyStone(int i, int j)
-	{
-		if (isValid(i) && isValid(j))
-		{
-			return board.getCellColor(i, j)==playerColor;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	private boolean isValid(int rowOrCol)
-	{
-		return rowOrCol>=0 && rowOrCol <board.SIZE;
-	}
-
 	
 }
