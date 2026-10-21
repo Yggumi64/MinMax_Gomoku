@@ -86,7 +86,10 @@ public class GomokuBoard
 		return false;
 	}
 	
-
+    public boolean isNotInBounds(int row, int col)
+    {
+        return row < 0 || row >= SIZE || col < 0 || col >= SIZE;
+    }
 
     /**
      * Obtenir l'état du plateau

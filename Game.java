@@ -8,6 +8,7 @@ import fr.esisar.in450.gomoku.gamecore.server.GomokuServer;
 import fr.esisar.in450.gomoku.player.BasicAIPlayer;
 import fr.esisar.in450.gomoku.player.DummyPlayer;
 import fr.esisar.in450.gomoku.player.HumanPlayer;
+import fr.esisar.in450.gomoku.player.MinMaxPlayer;
 
 
 /**
@@ -20,8 +21,8 @@ public class Game
     static void main(String[] args)
 	{
 		// ex1();
-		ex2();
-		// ...
+        ex2();
+		ex3();
 	}
 	
 	/**
@@ -40,6 +41,11 @@ public class Game
 	{
 		new LocalGameManager(new BasicAIPlayer(), new BasicAIPlayer()).startMatch();
 	}
+
+    public static void ex3()
+    {
+        new LocalGameManager(new MinMaxPlayer(), new HumanPlayer()).startMatch();
+    }
 	
 	
 	/**

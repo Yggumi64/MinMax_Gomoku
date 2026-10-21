@@ -28,50 +28,8 @@ public class BasicAIPlayer extends AbstractPlayer
 		}
 		
 		// Si on n'a pas trouvé : on retourne n'importe quelle cellule vide, en privilégiant le centre
-		for (int i = 0; i < board.SIZE; i++)
-		{
-			for (int j = 0; j < board.SIZE; j++)
-			{	
-				int k = ( (board.SIZE-1)/2+i) % board.SIZE;
-				int l = ( (board.SIZE-1)/2+j) % board.SIZE;
-				
-				if (board.getCellColor(k, l)==null)
-				{
-					return new Coords(k,l);
-				}
-			}
-		}
-		
-		// Le tableau est plein : pas de solution 
-		throw new RuntimeException();
+		return this.getClosestNullToCenter();
 	}
-
-	/**
-	 * Retourne true si la cellule < i, j > est vide et qu'une cellule adjacente contient
-	 * une pierre de la couleur de ce joueur  
-	 */
-	private boolean isMatching(int i, int j)
-	{
-		// On vérifie si la case est vide
-		if (board.getCellColor(i, j)!=null)
-		{
-			return false;
-		}
-				
-		// Horizontal
-		if (isMyStone(i-1,j)) return true;
-		if (isMyStone(i+1,j)) return true;
-		
-		// Vertical
-		if (isMyStone(i,j-1)) return true;
-		if (isMyStone(i,j+1)) return true;
-		
-		// Diagonal
-		if (isMyStone(i-1,j-1)) return true;
-		if (isMyStone(i-1,j+1)) return true;
-		if (isMyStone(i+1,j-1)) return true;
-        return isMyStone(i + 1, j + 1);
-    }
 
 	
 }
