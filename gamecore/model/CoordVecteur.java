@@ -8,7 +8,7 @@ import java.util.Objects;
 public class CoordVecteur {
     private final Coords start;
     private final Coords end;
-    private final XInARow iar;
+    private final int norm;
     private final Direction dir;
 
     public CoordVecteur(Coords start, Coords end, Direction dir) {
@@ -18,19 +18,7 @@ public class CoordVecteur {
 
         int dx = end.row - start.row;
         int dy = end.col - start.col;
-        int norm = Math.max(Math.abs(dx), Math.abs(dy)) + 1;
-        this.iar = matchIAR(norm);
-    }
-
-    private XInARow matchIAR(int norm) {
-        return switch (norm) {
-            case 1 -> XInARow.IAR1;
-            case 2 -> XInARow.IAR2;
-            case 3 -> XInARow.IAR3;
-            case 4 -> XInARow.IAR4;
-            case 5 -> XInARow.IAR5;
-            default -> XInARow.NONE;
-        };
+        norm = Math.max(Math.abs(dx), Math.abs(dy)) + 1;
     }
 
     public Coords getStart() {
@@ -45,8 +33,8 @@ public class CoordVecteur {
         return dir;
     }
 
-    public XInARow getIAR() {
-        return iar;
+    public int getNorm() {
+        return norm;
     }
 
     public CoordVecteur getLengthen() {
