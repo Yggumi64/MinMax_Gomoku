@@ -13,9 +13,9 @@ public enum Direction {
     private final int dx;
     private final int dy;
 
-    Direction(int dx, int dy) {
-        this.dx = dx;
-        this.dy = dy;
+    Direction(int col, int row) {
+        this.dx = row;
+        this.dy = col;
     }
 
     public int getDx() {
@@ -24,5 +24,18 @@ public enum Direction {
 
     public int getDy() {
         return dy;
+    }
+
+    public Direction reverse() {
+        return switch(this) {
+            case Nord -> South;
+            case NordEast -> SouthWest;
+            case East -> West;
+            case SouthEast -> NorthWest;
+            case South -> Nord;
+            case SouthWest -> NordEast;
+            case West -> East;
+            case NorthWest -> SouthEast;
+        };
     }
 }

@@ -11,56 +11,100 @@ import java.util.*;
 
 public class MinMaxPlayer extends AbstractPlayer {
 
+    private static final int MAX_GAP = 3;
+
     @Override
     public Coords play() {
         return getBestMove(getRows());
     }
 
-    /*
-     * Renvoie, à partir des coordonnées de départ, la plus longue ligne de pierres de la couleur du joueur dans une direction donnée.
-     */
     private CompleteRows foundIAR(Coords start, Direction dir) {
-        // Si la case de départ est vide, ou qu'elle ne contient pas une de nos pierres, on ne peut pas trouver de lignes.
-        if (board.isNotInBounds(start.row, start.col) || !this.isMyStone(start.row, start.col)) return null;
-
-        // On commence par initialiser la fin de la ligne = au départ.
-        Coords currentStart = start;
-        Coords currentEnd = start;
-        CompleteRows row = new CompleteRows();
-
-        for (int i = 0; i < 5; i++) {
-            // On se déplace dans la direction qui nous est donnée.
-            int nextRow = currentEnd.row + dir.getDx();
-            int nextCol = currentEnd.col + dir.getDy();
-
-            // Si la case suivante est vide, ou qu'elle ne contient pas une de nos pierres, on ajoute le CoordVecteur à notre ligne.
-            if (board.isNotInBounds(nextRow, nextCol) || !this.isMyStone(nextRow, nextCol)) {
-                row.addRow(new CoordVecteur(currentStart, currentEnd, dir));
-                currentStart = currentEnd;
-            }
-
-            // Sinon, on augmente la ligne.
-            currentEnd = new Coords(nextRow, nextCol);
+        if (board.isNotInBounds(start.row, start.col) || !this.isMyStone(start.row, start.col)) {
+            return null;
         }
 
-        // On retourne la ligne.
-        return row;
+        CompleteRows completeRow = new CompleteRows(board);
+
+        // 1. Trouver le premier segment continu de nos pierres
+        Coords currentEnd = findSegmentEnd(start, dir);
+        completeRow.addRow(new CoordVecteur(start, currentEnd, dir));
+
+        // 2. Chercher s'il y a un trou (max 2 cases vides) suivi d'un second segment
+        Coords secondStart = findNextMyStoneAfterGap(currentEnd, dir);
+
+        if (secondStart != null) {
+            Coords secondEnd = findSegmentEnd(secondStart, dir);
+            completeRow.addRow(new CoordVecteur(secondStart, secondEnd, dir));
+        }
+
+        return completeRow;
+    }
+
+    /**
+     * Trouve la fin d'un segment continu de nos pierres dans une direction,
+     * sans instancier d'objets intermédiaires en boucle (optimisation mémoire).
+     */
+    private Coords findSegmentEnd(Coords start, Direction dir) {
+        int r = start.row;
+        int c = start.col;
+
+        while (true) {
+            int nextRow = r + dir.getDx();
+            int nextCol = c + dir.getDy();
+            if (board.isNotInBounds(nextRow, nextCol) || !this.isMyStone(nextRow, nextCol)) {
+                break;
+            }
+            r = nextRow;
+            c = nextCol;
+        }
+        return new Coords(r, c);
+    }
+
+    /**
+     * Parcourt les cases vides (jusqu'à maxGap) pour trouver une de nos pierres après le trou.
+     */
+    private Coords findNextMyStoneAfterGap(Coords from, Direction dir) {
+        int r = from.row;
+        int c = from.col;
+        int emptyCellsCount = 0;
+
+        while (emptyCellsCount < MAX_GAP) {
+            r += dir.getDx();
+            c += dir.getDy();
+
+            if (board.isNotInBounds(r, c)) {
+                return null;
+            }
+
+            if (board.getCellColor(r, c) == null) {
+                emptyCellsCount++;
+            } else {
+                // On tombe sur une case non vide : si c'est notre pierre, on la retourne
+                if (this.isMyStone(r, c)) {
+                    return new Coords(r, c);
+                }
+                return null; // Bloqué par une pierre adverse
+            }
+        }
+
+        // Si on a épuisé le maxGap sans tomber sur une pierre valide
+        return null;
     }
 
     /*
-     * Renvoie un dictionnaire contenant une liste de toutes les lignes de la couleur du joueur pour chaque XInARow dans la grille.
+     * Renvoie l'ensemble des lignes de la couleur du joueur.
      */
     private Set<CompleteRows> getRows() {
-        // On initialise le dictionnaire
+        // On initialise l'ensemble.
         Set<CompleteRows> rows = new HashSet<>();
 
         // On parcourt la grille, puis chaque direction.
         for (int i = 0; i < board.SIZE; i++) {
             for (int j = 0; j < board.SIZE; j++) {
                 for (Direction dir : Direction.values()) {
-                    // On stocke la plus longue ligne de pierres de la couleur du joueur dans la direction.
+                    // On stocke la ligne de pierres de la couleur du joueur dans la direction.
                     CompleteRows iar = foundIAR(new Coords(i, j), dir);
-                    // Si la ligne existe, on la stocke dans le dictionnaire, en fonction de sa taille.
+                    // Si la ligne existe, on la stocke dans l'ensemble.
                     if (!(iar == null)) rows.add(iar);
                 }
             }
@@ -69,39 +113,45 @@ public class MinMaxPlayer extends AbstractPlayer {
     }
 
     /*
-     * On va chercher le meilleur coup possible en fonction de la valeur de chaque XInARow.
+     * On va chercher le meilleur coup possible.
      */
     private Coords getBestMove(Set<CompleteRows> rows) {
-        // On initialise la liste des meilleurs coups, avec une liste vide et un score de 0.
-        Set<Coords> bestMoves;
-        XInARow bestScore = XInARow.NONE;
+        // 1. Initialisation du dictionnaire de tous les coups par type
         Map<XInARow, Set<Coords>> xIARs = new HashMap<>();
         for (XInARow xIAR : XInARow.values()) {
             xIARs.put(xIAR, new HashSet<>());
         }
+
+        // 2. On remplit le dictionnaire avec TOUTES les lignes valides
         for (CompleteRows cr : rows) {
             if (cr.isEmpty()) continue;
+            cr.fillBestMoves();
             Map<XInARow, List<Coords>> moves = cr.getBestMoves();
-            if (moves.isEmpty()) continue;
-            for (XInARow xIAR : moves.keySet()) {
-                if (xIAR.getWeight() > bestScore.getWeight() && !moves.get(xIAR).isEmpty()) {
-                    xIARs.get(xIAR).addAll(moves.get(xIAR));
-                    bestScore = xIAR;
+
+            for (Map.Entry<XInARow, List<Coords>> entry : moves.entrySet()) {
+                if (!entry.getValue().isEmpty()) {
+                    xIARs.get(entry.getKey()).addAll(entry.getValue());
                 }
             }
         }
-        bestMoves = xIARs.get(bestScore);
-        // Si la liste des meilleurs coups est vide, on renvoie la case vide la plus proche du centre.
-        if (bestMoves.isEmpty()) return this.getClosestNullToCenter();
-        Coords bestMove = getClosestToCenter(bestMoves);
-        if (bestMove == null) return this.getClosestNullToCenter();
-        // Sinon, on renvoie le meilleur coup le plus proche du centre.
-        return bestMove;
-    }
 
-    // On vérifie si la case est vide et qu'elle n'est pas hors limites.
-    private boolean isAllowedMove(Coords move) {
-        return !board.isNotInBounds(move.row, move.col) && board.getCellColor(move.row, move.col) == null;
+        // 3. On cherche le meilleur score disponible (du plus lourd au plus léger).
+        XInARow bestScore = XInARow.NONE;
+        for (XInARow xIAR : XInARow.values()) {
+            if (!xIARs.get(xIAR).isEmpty() && xIAR.getWeight() > bestScore.getWeight()) {
+                bestScore = xIAR;
+            }
+        }
+
+        // 4. On récupère les coups correspondants
+        Set<Coords> bestMoves = xIARs.get(bestScore);
+
+        if (bestMoves == null || bestMoves.isEmpty()) {
+            return this.getClosestNullToCenter();
+        }
+
+        Coords bestMove = getClosestToCenter(bestMoves);
+        return (bestMove != null) ? bestMove : this.getClosestNullToCenter();
     }
 
     // On va chercher la case la plus proche du centre parmi un ensemble de cases.
@@ -111,17 +161,14 @@ public class MinMaxPlayer extends AbstractPlayer {
         int minDistance = Integer.MAX_VALUE;
 
         for (Coords coord : moves) {
-            if (isAllowedMove(coord)) {
-                int dx = coord.row - center;
-                int dy = coord.col - center;
-                int distanceSquared = (dx * dx) + (dy * dy);
+            int dx = coord.row - center;
+            int dy = coord.col - center;
+            int distanceSquared = (dx * dx) + (dy * dy);
 
-                if (distanceSquared < minDistance) {
-                    minDistance = distanceSquared;
-                    bestCoord = coord;
-                }
+            if (distanceSquared < minDistance) {
+                minDistance = distanceSquared;
+                bestCoord = coord;
             }
-
         }
         return bestCoord;
     }
