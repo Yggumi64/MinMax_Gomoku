@@ -13,6 +13,7 @@ public enum Direction {
     private final int dx;
     private final int dy;
 
+    // Attention, col = x, row = y
     Direction(int col, int row) {
         this.dx = row;
         this.dy = col;

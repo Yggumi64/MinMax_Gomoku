@@ -37,7 +37,7 @@ public class CompleteRows {
     }
 
     // Renvoie l'IAR résultant d'un coup dans une ligne.
-    private XInARow getIarInARow(Coords move, int indexStart, int indexEnd) {
+    private XInARow getIarInARow(int indexStart, int indexEnd) {
         CoordVecteur vecStart = this.rows.get(indexStart);
         CoordVecteur vecEnd = this.rows.get(indexEnd);
 
@@ -94,7 +94,7 @@ public class CompleteRows {
         List<Coords> moves = getCriticMoves(rows.get(start), rows.get(end));
         // On remplit le dictionnaire.
         for (Coords move : moves) {
-            XInARow iar = this.getIarInARow(move, start, end);
+            XInARow iar = this.getIarInARow(start, end);
             bestMoves.get(iar).add(move);
         }
     }
