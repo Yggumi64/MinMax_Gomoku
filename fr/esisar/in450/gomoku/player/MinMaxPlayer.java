@@ -11,8 +11,9 @@ public class MinMaxPlayer extends AbstractPlayer {
 
     private MinMaxCore core = null;
     
-    public void setMinMaxCore(AbstractPlayer player2) {
-        this.core = new MinMaxCore(this, player2, this.board);
+    public MinMaxPlayer() {
+        super();
+        this.core = new MinMaxCore(this, this.board);
     }
 
     public boolean isCoreSet() {
@@ -26,7 +27,7 @@ public class MinMaxPlayer extends AbstractPlayer {
     @Override
     public Coords play() {
         if (!isCoreSet()) throw new RuntimeException();
-        return getBestMove(core.getRows(this));
+        return getBestMove(core.getRows());
     }
 
     /*

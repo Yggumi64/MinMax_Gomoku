@@ -9,18 +9,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MinMaxCore {
-    private final AbstractPlayer player1;
-    private final AbstractPlayer player2;
+    private final AbstractPlayer player;
     private final GomokuBoard board;
     private static final int MAX_GAP = 3;
 
-    public MinMaxCore(AbstractPlayer player1, AbstractPlayer player2, GomokuBoard board) {
-        this.player1 = player2;
-        this.player2 = player1;
+    public MinMaxCore(AbstractPlayer player1, GomokuBoard board) {
+        this.player = player1;
         this.board = board;
     }
 
-    private CompleteRows foundIAR(Coords start, Direction dir, AbstractPlayer player) {
+    private CompleteRows foundIAR(Coords start, Direction dir) {
         if (board.isNotInBounds(start.row, start.col) || !player.isMyStone(start.row, start.col)) {
             return null;
         }
@@ -28,14 +26,14 @@ public class MinMaxCore {
         CompleteRows completeRow = new CompleteRows(board);
 
         // 1. Trouver le premier segment continu de nos pierres
-        Coords currentEnd = findSegmentEnd(start, dir, player);
+        Coords currentEnd = findSegmentEnd(start, dir);
         completeRow.addRow(new CoordVecteur(start, currentEnd, dir));
 
         // 2. Chercher s'il y a un trou (max 2 cases vides) suivi d'un second segment
-        Coords secondStart = findNextMyStoneAfterGap(currentEnd, dir, player);
+        Coords secondStart = findNextMyStoneAfterGap(currentEnd, dir);
 
         if (secondStart != null) {
-            Coords secondEnd = findSegmentEnd(secondStart, dir, player);
+            Coords secondEnd = findSegmentEnd(secondStart, dir);
             completeRow.addRow(new CoordVecteur(secondStart, secondEnd, dir));
         }
 
@@ -46,7 +44,7 @@ public class MinMaxCore {
      * Trouve la fin d'un segment continu de nos pierres dans une direction,
      * sans instancier d'objets intermédiaires en boucle (optimisation mémoire).
      */
-    private Coords findSegmentEnd(Coords start, Direction dir, AbstractPlayer player) {
+    private Coords findSegmentEnd(Coords start, Direction dir) {
         int r = start.row;
         int c = start.col;
 
@@ -65,7 +63,7 @@ public class MinMaxCore {
     /**
      * Parcourt les cases vides (jusqu'à maxGap) pour trouver une de nos pierres après le trou.
      */
-    private Coords findNextMyStoneAfterGap(Coords from, Direction dir, AbstractPlayer player) {
+    private Coords findNextMyStoneAfterGap(Coords from, Direction dir) {
         int r = from.row;
         int c = from.col;
         int emptyCellsCount = 0;
@@ -96,7 +94,7 @@ public class MinMaxCore {
     /*
      * Renvoie l'ensemble des lignes de la couleur du joueur.
      */
-    public Set<CompleteRows> getRows(AbstractPlayer player) {
+    public Set<CompleteRows> getRows() {
         // On initialise l'ensemble.
         Set<CompleteRows> rows = new HashSet<>();
 
@@ -105,7 +103,7 @@ public class MinMaxCore {
             for (int j = 0; j < board.SIZE; j++) {
                 for (Direction dir : Direction.values()) {
                     // On stocke la ligne de pierres de la couleur du joueur dans la direction.
-                    CompleteRows iar = foundIAR(new Coords(i, j), dir, player);
+                    CompleteRows iar = foundIAR(new Coords(i, j), dir);
                     // Si la ligne existe, on la stocke dans l'ensemble.
                     if (!(iar == null)) rows.add(iar);
                 }
@@ -133,15 +131,8 @@ public class MinMaxCore {
         return bestCoord;
     }
 
-    public int getBoardScore(AbstractPlayer player) {
+    public int getBoardScore() {
         return 0;
     }
 
-    
-
-    public int evaluateBoard(GomokuBoard board) {
-        int scorePlayer1 = getBoardScore(player1);
-        int scorePlayer2 = getBoardScore(player2);
-        return scorePlayer1-scorePlayer2;
-    }
 }
