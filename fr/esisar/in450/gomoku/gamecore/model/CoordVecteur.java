@@ -1,8 +1,6 @@
 package fr.esisar.in450.gomoku.gamecore.model;
 
 import fr.esisar.in450.gomoku.gamecore.enums.Direction;
-import fr.esisar.in450.gomoku.gamecore.enums.XInARow;
-
 import java.util.Objects;
 
 public class CoordVecteur {

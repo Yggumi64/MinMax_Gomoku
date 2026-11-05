@@ -1,13 +1,13 @@
 package fr.esisar.in450.gomoku.gamecore.server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.EOFException;
-import java.net.Socket;
-
 import fr.esisar.in450.gomoku.gamecore.model.Coords;
 import fr.esisar.in450.gomoku.gamecore.network.GomokuRequest;
 import fr.esisar.in450.gomoku.gamecore.network.GomokuResponse;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import java.net.Socket;
 
 public class GomokuServerPc extends Thread
 {
@@ -113,41 +113,40 @@ public class GomokuServerPc extends Thread
 	@Override
 	public void run()
 	{
-		try
-		{
-			DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-			DataInputStream dis = new DataInputStream(socket.getInputStream());
-			
-			
-			
-			while(stayConnected)  
-			{
-				// Deserialisation de la requête
-				GomokuRequest req = GomokuRequest.deserialize(dis);
+		try {
+			try (socket) {
+				DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+				DataInputStream dis = new DataInputStream(socket.getInputStream());
 				
-				// Calcul de la réponse
-				GomokuResponse res = process(req);
 				
-				// Serialisation de la réponse
-				res.serialize(dos);
-				dos.flush();
 				
-				if (res.errorMessage!=null)
+				while(stayConnected)
 				{
-					System.out.println("Le joueur "+(pcNumber+1)+"-"+teamName+" vient de réaliser une erreur : "+res.errorMessage);
-					System.out.println("Fin du tournoi");
-					System.exit(0);
+					// Deserialisation de la requête
+					GomokuRequest req = GomokuRequest.deserialize(dis);
+					
+					// Calcul de la réponse
+					GomokuResponse res = process(req);
+					
+					// Serialisation de la réponse
+					res.serialize(dos);
+					dos.flush();
+					
+					if (res.errorMessage!=null)
+					{
+						System.out.println("Le joueur "+(pcNumber+1)+"-"+teamName+" vient de réaliser une erreur : "+res.errorMessage);
+						System.out.println("Fin du tournoi");
+						System.exit(0);
+					}
 				}
 			}
-			
-			socket.close();
 		} 
 		catch (EOFException e) 
 		{
 			System.out.println("Le joueur "+(pcNumber+1)+" vient de se déconnecter ! ");
 			e.printStackTrace();
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 			e.printStackTrace();
 		}

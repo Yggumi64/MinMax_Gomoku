@@ -1,13 +1,12 @@
 package fr.esisar.in450.gomoku.gamecore.network;
 
+import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
+import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
+import fr.esisar.in450.gomoku.gamecore.model.Coords;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-
-import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
-import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
-import fr.esisar.in450.gomoku.gamecore.model.Coords;
 
 public class GomokuProxy
 {
@@ -27,11 +26,11 @@ public class GomokuProxy
 	{
 		try
 		{
-            // noinspection resource
-			Socket s = new Socket(ipServer, 7200);
-	
-			dis = new DataInputStream(s.getInputStream());
-			dos = new DataOutputStream(s.getOutputStream());
+            try (// noinspection resource
+			Socket s = new Socket(ipServer, 7200)) {
+				dis = new DataInputStream(s.getInputStream());
+				dos = new DataOutputStream(s.getOutputStream());
+			}
 		} 
 		catch (IOException e)
 		{
