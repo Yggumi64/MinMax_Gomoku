@@ -1,7 +1,5 @@
 package fr.esisar.in450.gomoku;
 
-import java.io.IOException;
-
 import fr.esisar.in450.gomoku.gamecore.ClientNetWorkGameManager;
 import fr.esisar.in450.gomoku.gamecore.LocalGameManager;
 import fr.esisar.in450.gomoku.gamecore.server.GomokuServer;
@@ -9,6 +7,7 @@ import fr.esisar.in450.gomoku.player.BasicAIPlayer;
 import fr.esisar.in450.gomoku.player.DummyPlayer;
 import fr.esisar.in450.gomoku.player.HumanPlayer;
 import fr.esisar.in450.gomoku.player.MinMaxPlayer;
+import java.io.IOException;
 
 
 /**
