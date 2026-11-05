@@ -2,13 +2,12 @@ package fr.esisar.in450.gomoku.gamecore.model;
 
 import fr.esisar.in450.gomoku.gamecore.enums.Direction;
 import fr.esisar.in450.gomoku.gamecore.enums.XInARow;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CompleteRows {
+public final class CompleteRows {
     private final List<CoordVecteur> rows;
     private final Map<XInARow, List<Coords>> bestMoves;
     private XInARow iar;

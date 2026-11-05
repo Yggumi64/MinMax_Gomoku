@@ -28,4 +28,5 @@ public class LocalGameManager extends AbstractGameManager
         // Fin de la partie
         this.winnerBoard(winnerState);
     }
+
 }
