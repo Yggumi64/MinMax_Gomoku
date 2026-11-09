@@ -1,8 +1,8 @@
-package fr.esisar.in450.gomoku.gamecore.network;
+package gamecore.network;
 
-import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
-import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
-import fr.esisar.in450.gomoku.gamecore.model.Coords;
+import gamecore.enums.CellColor;
+import gamecore.enums.WinnerState;
+import gamecore.model.Coords;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

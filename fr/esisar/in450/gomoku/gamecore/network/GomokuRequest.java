@@ -1,4 +1,4 @@
-package fr.esisar.in450.gomoku.gamecore.network;
+package gamecore.network;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5ef88468-aa75-4cab-9b97-a3e331d7f22e" name="Changes" comment="Start foundIAR">
+      <change afterPath="$PROJECT_DIR$/gamecore/enums/Direction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamecore/enums/TypeOfRow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamecore/model/CoordVecteur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamecore/AbstractPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamecore/AbstractPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamecore/enums/XInARow.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamecore/enums/XInARow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamecore/model/GomokuBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamecore/model/GomokuBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player/BasicAIPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/player/BasicAIPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player/MinMaxPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/player/MinMaxPlayer.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Coder0854&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Yggumi64/MinMax_Gomoku.git&quot;,
+    &quot;accountId&quot;: &quot;b5471d37-83c9-4d57-a891-9e8fb46f2c0c&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/gamecore/enums/WinnerState.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="3Ku0ew4ZfiY5bCA3d4CJNmrqLdn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Game.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/syg-pc10/Documents/local/IUT/gomoku",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "Errors",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="fr.esisar.in450.gomoku.Game" />
+      <module name="gomoku" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5ef88468-aa75-4cab-9b97-a3e331d7f22e" name="Changes" comment="" />
+      <created>1792392244896</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1792392244896</updated>
+      <workItem from="1792392246274" duration="23476000" />
+      <workItem from="1792502950209" duration="9946000" />
+    </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1792403723816</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1792403723816</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Code refactored completely">
+      <option name="closed" value="true" />
+      <created>1792487978785</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1792487978786</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Typo and spelling correction">
+      <option name="closed" value="true" />
+      <created>1792488402953</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1792488402953</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add MinMaxPlayer">
+      <option name="closed" value="true" />
+      <created>1792488509954</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1792488509954</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Start foundIAR">
+      <option name="closed" value="true" />
+      <created>1792504915865</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1792504915865</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <MESSAGE value="Code refactored completely" />
+    <MESSAGE value="Typo and spelling correction" />
+    <MESSAGE value="Add MinMaxPlayer" />
+    <MESSAGE value="Start foundIAR" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start foundIAR" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

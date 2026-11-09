@@ -1,4 +1,4 @@
-package fr.esisar.in450.gomoku.gamecore.network;
+package gamecore.network;
 
 public enum RequestResponseType
 {

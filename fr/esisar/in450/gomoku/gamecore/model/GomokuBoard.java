@@ -1,7 +1,7 @@
-package fr.esisar.in450.gomoku.gamecore.model;
+package gamecore.model;
 
-import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
-import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
+import gamecore.enums.CellColor;
+import gamecore.enums.WinnerState;
 import java.util.ArrayList;
 import java.util.List;
 

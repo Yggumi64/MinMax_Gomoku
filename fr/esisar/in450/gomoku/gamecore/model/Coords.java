@@ -1,4 +1,4 @@
-package fr.esisar.in450.gomoku.gamecore.model;
+package gamecore.model;
 
 /**
  * Coordonnées sur le plateau de jeu

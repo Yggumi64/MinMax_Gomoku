@@ -1,7 +1,6 @@
-package fr.esisar.in450.gomoku.gamecore.model;
+package gamecore.model;
 
-import fr.esisar.in450.gomoku.gamecore.enums.Direction;
-import fr.esisar.in450.gomoku.gamecore.enums.XInARow;
+import gamecore.enums.Direction;
 
 import java.util.Objects;
 

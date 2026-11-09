@@ -1,4 +1,4 @@
-package fr.esisar.in450.gomoku.gamecore.server;
+package gamecore.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;

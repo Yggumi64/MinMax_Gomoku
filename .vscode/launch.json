@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Game",
             "request": "launch",
+            "mainClass": "Game",
+            "projectName": "gomoku_af543fe8"
+        },
+        {
+            "type": "java",
+            "name": "Game",
+            "request": "launch",
             "mainClass": "fr.esisar.in450.gomoku.Game",
             "projectName": ""
         },

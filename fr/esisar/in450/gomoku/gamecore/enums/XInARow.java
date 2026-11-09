@@ -1,4 +1,4 @@
-package fr.esisar.in450.gomoku.gamecore.enums;
+package gamecore.enums;
 
 public enum XInARow {
     NONE(0, 0),

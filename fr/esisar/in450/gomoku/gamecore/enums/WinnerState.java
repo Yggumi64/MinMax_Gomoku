@@ -1,4 +1,4 @@
-package fr.esisar.in450.gomoku.gamecore.enums;
+package gamecore.enums;
 
 /**
  * Liste des états possibles pour la fin d'une partie

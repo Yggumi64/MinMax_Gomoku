@@ -1,10 +1,10 @@
-package fr.esisar.in450.gomoku.player;
+package player;
 
-import fr.esisar.in450.gomoku.gamecore.AbstractPlayer;
-import fr.esisar.in450.gomoku.gamecore.MinMaxCore;
-import fr.esisar.in450.gomoku.gamecore.enums.XInARow;
-import fr.esisar.in450.gomoku.gamecore.model.CompleteRows;
-import fr.esisar.in450.gomoku.gamecore.model.Coords;
+import gamecore.AbstractPlayer;
+import gamecore.MinMaxCore;
+import gamecore.enums.XInARow;
+import gamecore.model.CompleteRows;
+import gamecore.model.Coords;
 import java.util.*;
 
 public class MinMaxPlayer extends AbstractPlayer {

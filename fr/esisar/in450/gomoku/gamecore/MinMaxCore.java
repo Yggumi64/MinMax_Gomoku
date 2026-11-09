@@ -1,10 +1,10 @@
-package fr.esisar.in450.gomoku.gamecore;
+package gamecore;
 
-import fr.esisar.in450.gomoku.gamecore.enums.Direction;
-import fr.esisar.in450.gomoku.gamecore.model.CompleteRows;
-import fr.esisar.in450.gomoku.gamecore.model.CoordVecteur;
-import fr.esisar.in450.gomoku.gamecore.model.Coords;
-import fr.esisar.in450.gomoku.gamecore.model.GomokuBoard;
+import gamecore.enums.Direction;
+import gamecore.model.CompleteRows;
+import gamecore.model.CoordVecteur;
+import gamecore.model.Coords;
+import gamecore.model.GomokuBoard;
 import java.util.HashSet;
 import java.util.Set;
 

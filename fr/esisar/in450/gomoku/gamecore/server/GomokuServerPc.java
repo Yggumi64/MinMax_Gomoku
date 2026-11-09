@@ -1,8 +1,8 @@
-package fr.esisar.in450.gomoku.gamecore.server;
+package gamecore.server;
 
-import fr.esisar.in450.gomoku.gamecore.model.Coords;
-import fr.esisar.in450.gomoku.gamecore.network.GomokuRequest;
-import fr.esisar.in450.gomoku.gamecore.network.GomokuResponse;
+import gamecore.model.Coords;
+import gamecore.network.GomokuRequest;
+import gamecore.network.GomokuResponse;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;

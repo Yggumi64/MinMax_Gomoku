@@ -1,7 +1,7 @@
-package fr.esisar.in450.gomoku.player;
+package player;
 
-import fr.esisar.in450.gomoku.gamecore.AbstractPlayer;
-import fr.esisar.in450.gomoku.gamecore.model.Coords;
+import gamecore.AbstractPlayer;
+import gamecore.model.Coords;
 
 
 /** 

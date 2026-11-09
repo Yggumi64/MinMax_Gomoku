@@ -1,10 +1,10 @@
-package fr.esisar.in450.gomoku.gamecore;
+package gamecore;
 
-import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
-import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
-import fr.esisar.in450.gomoku.gamecore.model.Coords;
-import fr.esisar.in450.gomoku.gamecore.network.GomokuProxy;
-import fr.esisar.in450.gomoku.gamecore.network.NetworkPlayer;
+import gamecore.enums.CellColor;
+import gamecore.enums.WinnerState;
+import gamecore.model.Coords;
+import gamecore.network.GomokuProxy;
+import gamecore.network.NetworkPlayer;
 
 
 public class ClientNetWorkGameManager extends AbstractGameManager

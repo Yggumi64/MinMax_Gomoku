@@ -1,9 +1,9 @@
-package fr.esisar.in450.gomoku.gamecore;
+package gamecore;
 
-import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
-import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
-import fr.esisar.in450.gomoku.gamecore.model.Coords;
-import fr.esisar.in450.gomoku.gamecore.model.GomokuBoard;
+import gamecore.enums.CellColor;
+import gamecore.enums.WinnerState;
+import gamecore.model.Coords;
+import gamecore.model.GomokuBoard;
 
 public abstract class AbstractGameManager {
     protected AbstractPlayer player1;

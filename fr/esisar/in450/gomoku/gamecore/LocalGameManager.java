@@ -1,7 +1,7 @@
-package fr.esisar.in450.gomoku.gamecore;
+package gamecore;
 
-import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
-import fr.esisar.in450.gomoku.gamecore.model.GomokuBoard;
+import gamecore.enums.WinnerState;
+import gamecore.model.GomokuBoard;
 
 
 public class LocalGameManager extends AbstractGameManager
