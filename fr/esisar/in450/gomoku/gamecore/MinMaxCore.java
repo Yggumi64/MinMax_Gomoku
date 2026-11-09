@@ -1,11 +1,14 @@
 package gamecore;
 
 import gamecore.enums.Direction;
+import gamecore.enums.WinnerState;
+import gamecore.enums.XInARow;
 import gamecore.model.CompleteRows;
 import gamecore.model.CoordVecteur;
 import gamecore.model.Coords;
 import gamecore.model.GomokuBoard;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class MinMaxCore {
@@ -131,8 +134,112 @@ public class MinMaxCore {
         return bestCoord;
     }
 
+    /**
+     * Évalue le plateau pour le joueur actuel par rapport à l'adversaire.
+     */
     public int getBoardScore() {
-        return 0;
+        int myScore = evaluateRowsForColor(true);      // Nos lignes
+        int opponentScore = evaluateRowsForColor(false); // Lignes adverses
+        
+        // On maximise notre score et on minimise (punit) celui de l'adversaire
+        return myScore - (opponentScore * 2); // Le *2 donne un peu plus d'importance défensive
+    }
+
+    private int evaluateRowsForColor(boolean isMe) {
+        int totalScore = 0;
+        // Note: il faudrait pouvoir interroger les lignes pour une couleur donnée.
+        // Si getRows() utilise this.player.isMyStone(), on peut adapter pour tester l'adversaire.
+        Set<CompleteRows> targetRows = getRowsForTest(isMe);
+        
+        for (CompleteRows cr : targetRows) {
+            if (cr.isEmpty()) continue;
+            cr.fillBestMoves();
+            Map<XInARow, java.util.List<Coords>> moves = cr.getBestMoves();
+            
+            for (Map.Entry<XInARow, java.util.List<Coords>> entry : moves.entrySet()) {
+                if (!entry.getValue().isEmpty()) {
+                    totalScore += entry.getKey().getWeight() * entry.getValue().size();
+                }
+            }
+        }
+        return totalScore;
+    }
+
+    // Version adaptable de getRows pour tester l'IA ou l'adversaire
+    private Set<CompleteRows> getRowsForTest(boolean isMe) {
+        Set<CompleteRows> rows = new HashSet<>();
+        for (int i = 0; i < board.SIZE; i++) {
+            for (int j = 0; j < board.SIZE; j++) {
+                Coords c = new Coords(i, j);
+                // Vérifie si la pierre appartient au camp testé
+                boolean matches = isMe ? player.isMyStone(i, j) : (board.getCellColor(i, j) != null && !player.isMyStone(i, j));
+                
+                if (matches) {
+                    for (Direction dir : Direction.values()) {
+                        CompleteRows iar = foundIAR(c, dir);
+                        if (iar != null) rows.add(iar);
+                    }
+                }
+            }
+        }
+        return rows;
+    }
+
+    /**
+     * Algorithme MinMax récursif
+     */
+    public int minMax(int depth, boolean isMaximizing, int alpha, int beta) {
+        // Condition d'arrêt : profondeur atteinte ou fin de partie 
+        if (depth == 0 || board.getWinnerState() != WinnerState.NONE) {
+            return getBoardScore();
+        }
+        
+        // Récupérer tous les coups possibles (cases vides proches de pierres existantes par exemple, ou toutes les cases vides)
+        Set<Coords> possibleMoves = getAllAllowedMoves();
+
+        if (isMaximizing) {
+            int maxEval = Integer.MIN_VALUE;
+            for (Coords move : possibleMoves) {
+                // Jouer le coup temporairement
+                board.setCellColor(move.row, move.col, player.getColor()); // (Vérifie la méthode exacte de ton GomokuBoard pour poser un pion)
+                
+                int eval = minMax(depth - 1, false, alpha, beta);
+                
+                // Annuler le coup (Backtracking)
+                board.setCellColor(move.row, move.col, null);
+
+                maxEval = Math.max(maxEval, eval);
+                alpha = Math.max(alpha, eval);
+                if (beta <= alpha) break; // Élagage Alpha-Beta
+            }
+            return maxEval;
+        } else {
+            int minEval = Integer.MAX_VALUE;
+            for (Coords move : possibleMoves) {
+                board.setCellColor(move.row, move.col, player.getOpponentColor());
+                
+                int eval = minMax(depth - 1, true, alpha, beta);
+                
+                board.setCellColor(move.row, move.col, null);
+
+                minEval = Math.min(minEval, eval);
+                beta = Math.min(beta, eval);
+                if (beta <= alpha) break;
+            }
+            return minEval;
+        }
+    }
+
+    private Set<Coords> getAllAllowedMoves() {
+        Set<Coords> moves = new HashSet<>();
+        for (int i = 0; i < board.SIZE; i++) {
+            for (int j = 0; j < board.SIZE; j++) {
+                if (board.getCellColor(i, j) == null) {
+                    moves.add(new Coords(i, j));
+                }
+            }
+        }
+        return moves;
     }
 
 }

@@ -5,28 +5,22 @@ import gamecore.MinMaxCore;
 import gamecore.enums.XInARow;
 import gamecore.model.CompleteRows;
 import gamecore.model.Coords;
+import gamecore.model.GomokuBoard;
+
 import java.util.*;
 
 public class MinMaxPlayer extends AbstractPlayer {
 
     private MinMaxCore core = null;
-    
-    public MinMaxPlayer() {
-        super();
-        this.core = new MinMaxCore(this, this.board);
-    }
 
-    public boolean isCoreSet() {
-        if (core == null) {
-            System.out.println("You must add a core to this player first");
-            return false;
-        } 
-        return true;
+    @Override 
+    public void setBoard(GomokuBoard board) {
+        this.board = board;
+        this.core = new MinMaxCore(this, this.board);
     }
 
     @Override
     public Coords play() {
-        if (!isCoreSet()) throw new RuntimeException();
         return getBestMove(core.getRows());
     }
 
@@ -34,7 +28,6 @@ public class MinMaxPlayer extends AbstractPlayer {
      * On va chercher le meilleur coup possible.
      */
     private Coords getBestMove(Set<CompleteRows> rows) {
-        if (!isCoreSet()) throw new RuntimeException();
         // 1. Initialisation du dictionnaire de tous les coups par type
         Map<XInARow, Set<Coords>> xIARs = new HashMap<>();
         for (XInARow xIAR : XInARow.values()) {

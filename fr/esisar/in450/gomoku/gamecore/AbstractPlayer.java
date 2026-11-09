@@ -51,11 +51,15 @@ public abstract class AbstractPlayer
 	{
 		return playerColor;
 	}
+
+    final public CellColor getOpponentColor() {
+        return (playerColor == CellColor.BLACK) ? CellColor.WHITE : CellColor.BLACK;
+    }
 	
 	/**
 	 * Permet d'indiquer au joueur le plateau
 	 */
-	final public void setBoard(GomokuBoard board)
+	public void setBoard(GomokuBoard board)
 	{
 		this.board = board;
 	}
