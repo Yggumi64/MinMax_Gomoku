@@ -1,6 +1,7 @@
 package fr.esisar.in450.gomoku.gamecore;
 
 import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
+import fr.esisar.in450.gomoku.gamecore.model.GomokuBoard;
 
 
 public class LocalGameManager extends AbstractGameManager
@@ -28,4 +29,13 @@ public class LocalGameManager extends AbstractGameManager
         // Fin de la partie
         this.winnerBoard(winnerState);
     }
+
+    public int evaluateBoard(GomokuBoard board) {
+        MinMaxCore corePlayer1 = new MinMaxCore(player1, board);
+        int scorePlayer1 = corePlayer1.getBoardScore();
+        MinMaxCore corePlayer2 = new MinMaxCore(player2, board);
+        int scorePlayer2 = corePlayer2.getBoardScore();
+        return scorePlayer1-scorePlayer2;
+    }
+
 }

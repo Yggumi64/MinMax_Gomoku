@@ -1,10 +1,9 @@
 package fr.esisar.in450.gomoku.gamecore.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
 import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Modelisation d'un plateau de Gomoku -
@@ -223,22 +222,12 @@ public class GomokuBoard
 	{
 		CellColor cellColor = getCellColor(i, j);
 		
-		if (cellColor==null)
-		{
-			return " ";
-		}
-		else if (cellColor==CellColor.BLACK)
-		{	
-				return "B";
-		}
-		else if (cellColor==CellColor.WHITE)
-		{
-			return "W";
-		}
-		else
-		{
-			throw new RuntimeException();
-		}
+		return switch (cellColor) {
+            case BLACK -> "B";
+            case WHITE -> "W";
+			case null -> " ";
+            default -> throw new RuntimeException();
+        };
 	}
 
 	private WinnerState hasWinner(String st)
@@ -282,22 +271,12 @@ public class GomokuBoard
     
 	private void displayCell(CellColor cellColor)
 	{			
-		if (cellColor==null)
-		{
-			System.out.print("-  "); //
-		}
-		else if (cellColor==CellColor.BLACK)
-		{	
-				System.out.print("B  "); // ■
-		}
-		else if (cellColor==CellColor.WHITE)
-		{
-			System.out.print("W  "); // □
-		}
-		else
-		{
-			throw new RuntimeException();
-		}
+		switch (cellColor) {
+            case BLACK -> System.out.print("B  "); // ■
+            case WHITE -> System.out.print("W  "); // □
+			case null -> System.out.print("-  "); //
+            default -> throw new RuntimeException();
+        }
 	}
 	
 	

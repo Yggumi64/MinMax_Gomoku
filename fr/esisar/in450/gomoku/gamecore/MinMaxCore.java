@@ -1,25 +1,25 @@
-package fr.esisar.in450.gomoku.player;
+package fr.esisar.in450.gomoku.gamecore;
 
-import fr.esisar.in450.gomoku.gamecore.AbstractPlayer;
 import fr.esisar.in450.gomoku.gamecore.enums.Direction;
-import fr.esisar.in450.gomoku.gamecore.enums.XInARow;
 import fr.esisar.in450.gomoku.gamecore.model.CompleteRows;
 import fr.esisar.in450.gomoku.gamecore.model.CoordVecteur;
 import fr.esisar.in450.gomoku.gamecore.model.Coords;
+import fr.esisar.in450.gomoku.gamecore.model.GomokuBoard;
+import java.util.HashSet;
+import java.util.Set;
 
-import java.util.*;
-
-public class MinMaxPlayer extends AbstractPlayer {
-
+public class MinMaxCore {
+    private final AbstractPlayer player;
+    private final GomokuBoard board;
     private static final int MAX_GAP = 3;
 
-    @Override
-    public Coords play() {
-        return getBestMove(getRows());
+    public MinMaxCore(AbstractPlayer player1, GomokuBoard board) {
+        this.player = player1;
+        this.board = board;
     }
 
     private CompleteRows foundIAR(Coords start, Direction dir) {
-        if (board.isNotInBounds(start.row, start.col) || !this.isMyStone(start.row, start.col)) {
+        if (board.isNotInBounds(start.row, start.col) || !player.isMyStone(start.row, start.col)) {
             return null;
         }
 
@@ -51,7 +51,7 @@ public class MinMaxPlayer extends AbstractPlayer {
         while (true) {
             int nextRow = r + dir.getDx();
             int nextCol = c + dir.getDy();
-            if (board.isNotInBounds(nextRow, nextCol) || !this.isMyStone(nextRow, nextCol)) {
+            if (board.isNotInBounds(nextRow, nextCol) || !player.isMyStone(nextRow, nextCol)) {
                 break;
             }
             r = nextRow;
@@ -80,7 +80,7 @@ public class MinMaxPlayer extends AbstractPlayer {
                 emptyCellsCount++;
             } else {
                 // On tombe sur une case non vide : si c'est notre pierre, on la retourne
-                if (this.isMyStone(r, c)) {
+                if (player.isMyStone(r, c)) {
                     return new Coords(r, c);
                 }
                 return null; // Bloqué par une pierre adverse
@@ -94,7 +94,7 @@ public class MinMaxPlayer extends AbstractPlayer {
     /*
      * Renvoie l'ensemble des lignes de la couleur du joueur.
      */
-    private Set<CompleteRows> getRows() {
+    public Set<CompleteRows> getRows() {
         // On initialise l'ensemble.
         Set<CompleteRows> rows = new HashSet<>();
 
@@ -112,50 +112,8 @@ public class MinMaxPlayer extends AbstractPlayer {
         return rows;
     }
 
-    /*
-     * On va chercher le meilleur coup possible.
-     */
-    private Coords getBestMove(Set<CompleteRows> rows) {
-        // 1. Initialisation du dictionnaire de tous les coups par type
-        Map<XInARow, Set<Coords>> xIARs = new HashMap<>();
-        for (XInARow xIAR : XInARow.values()) {
-            xIARs.put(xIAR, new HashSet<>());
-        }
-
-        // 2. On remplit le dictionnaire avec TOUTES les lignes valides
-        for (CompleteRows cr : rows) {
-            if (cr.isEmpty()) continue;
-            cr.fillBestMoves();
-            Map<XInARow, List<Coords>> moves = cr.getBestMoves();
-
-            for (Map.Entry<XInARow, List<Coords>> entry : moves.entrySet()) {
-                if (!entry.getValue().isEmpty()) {
-                    xIARs.get(entry.getKey()).addAll(entry.getValue());
-                }
-            }
-        }
-
-        // 3. On cherche le meilleur score disponible (du plus lourd au plus léger).
-        XInARow bestScore = XInARow.NONE;
-        for (XInARow xIAR : XInARow.values()) {
-            if (!xIARs.get(xIAR).isEmpty() && xIAR.getWeight() > bestScore.getWeight()) {
-                bestScore = xIAR;
-            }
-        }
-
-        // 4. On récupère les coups correspondants
-        Set<Coords> bestMoves = xIARs.get(bestScore);
-
-        if (bestMoves == null || bestMoves.isEmpty()) {
-            return this.getClosestNullToCenter();
-        }
-
-        Coords bestMove = getClosestToCenter(bestMoves);
-        return (bestMove != null) ? bestMove : this.getClosestNullToCenter();
-    }
-
     // On va chercher la case la plus proche du centre parmi un ensemble de cases.
-    private Coords getClosestToCenter(Set<Coords> moves) {
+    public Coords getClosestToCenter(Set<Coords> moves) {
         int center = board.SIZE / 2;
         Coords bestCoord = null;
         int minDistance = Integer.MAX_VALUE;
@@ -172,4 +130,9 @@ public class MinMaxPlayer extends AbstractPlayer {
         }
         return bestCoord;
     }
+
+    public int getBoardScore() {
+        return 0;
+    }
+
 }
